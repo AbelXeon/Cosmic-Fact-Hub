@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Fact Hub</title>
+  <!-- Sci-fi font from Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+
+<style>
+/* RESET & FUTURISTIC BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #0A1128;
+    color: #E2FDFF;
+    font-family: 'Rajdhani', 'Arial', sans-serif;
+  }
+  
+  /* NAVBAR - SCI-FI STYLE */
+  .navbar {
+    background-color: rgba(10, 17, 40, 0.9);
+    border-bottom: 1px solid #00F5FF;
+    padding: 1.5rem 2rem;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #E2FDFF;
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+  
+  .glow {
+    color: #00F5FF;
+    text-shadow: 0 0 10px #00F5FF, 0 0 20px rgba(0, 245, 255, 0.5);
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #E2FDFF;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  /* HOVER EFFECT: Neon underline + glow */
+  .nav-link:hover {
+    color: #00F5FF;
+    text-shadow: 0 0 8px #00F5FF;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #FF2A6D;
+    bottom: 0;
+    left: 0;
+    transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+    box-shadow: 0 0 10px #FF2A6D;
+  }
+
+
+
+  /* MAIN SECTION - FUTURISTIC CARD */
+.fact-generator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 2rem;
+  }
+  
+  .fact-container {
+    background: rgba(10, 17, 40, 0.7);
+    border: 1px solid #00F5FF;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3),
+                inset 0 0 10px rgba(0, 245, 255, 0.2);
+    padding: 2.5rem;
+    max-width: 600px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+  }
+  
+  .fact-container h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00F5FF;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+ /* TERMINAL-STYLE FACT DISPLAY */
+.fact-display {
+    min-height: 150px;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    border: 1px solid #00F5FF;
+    border-radius: 5px;
+    background: rgba(0, 10, 20, 0.7);
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #00F5FF;
+    text-shadow: 0 0 5px #00F5FF;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* TYPEWRITER ANIMATION */
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  .fact-display p {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(40, end);
+  }
+  
+  /* GLOWING CURSOR EFFECT */
+  .fact-display p::after {
+    content: '|';
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  /* GLOW BUTTON */
+  .glow-button {
+    background: linear-gradient(45deg, #00F5FF, #0066FF);
+    color: #0A1128;
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.6);
+  }
+  
+  .glow-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(0, 245, 255, 0.9);
+  }
+  
+  .glow-button:active {
+    transform: translateY(1px);
+  }
+  
+  /* PULSE ANIMATION */
+  @keyframes pulse {
+    0% { box-shadow: 0 0 15px rgba(0, 245, 255, 0.6); }
+    50% { box-shadow: 0 0 25px rgba(0, 245, 255, 0.9); }
+    100% { box-shadow: 0 0 15px rgba(0, 245, 255, 0.6); }
+  }
+  
+  .glow-button {
+    animation: pulse 2s infinite;
+  }
+
+  /* Typewriter cursor */
+.cursor {
+    animation: blink 1s infinite;
+    color: #FF2A6D;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  /* Fact counter */
+  .fact-counter {
+    font-size: 0.9rem;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  /* ===== FOOTER STYLES ===== */
+  .cosmic-footer {
+    background: rgba(10, 17, 40, 0.95);
+    border-top: 1px solid #00F5FF;
+    padding: 3rem 2rem 1.5rem;
+    color: #E2FDFF;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-subtitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: #00F5FF;
+    margin-top: 0.5rem;
+  }
+
+  .footer-links h3, 
+  .footer-social h3 {
+    color: #00F5FF;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .footer-links ul {
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: #E2FDFF;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: block;
+    padding: 0.3rem 0;
+  }
+
+  .footer-links a:hover {
+    color: #00F5FF;
+    transform: translateX(5px);
+    text-shadow: 0 0 8px rgba(0, 245, 255, 0.7);
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .social-icon {
+    color: #E2FDFF;
+    font-size: 1.5rem;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .social-icon:hover {
+    transform: translateY(-5px) scale(1.2);
+    color: #FF2A6D;
+  }
+
+  .footer-copyright {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #00F5FF;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  .pulse {
+    animation: pulse 1.5s infinite;
+    display: inline-block;
+    color: #FF2A6D;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+  <!-- FUTURISTIC NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="logo">
+        <span class="glow">COSMIC</span>FACT HUB 🚀
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">HOME</a></li>
+        <li><a href="quiz.html" class="nav-link">QUIZ</a></li>
+        <li><a href="submit.html" class="nav-link">SUBMIT</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- MAIN SECTION -->
+  <main class="fact-generator">
+    <div class="fact-container">
+      <h2>PRESS THE BUTTON TO REVEAL A COSMIC FACT</h2>
+      <div class="fact-display" id="factDisplay">
+        <p>Fact will appear here...</p>
+      </div>
+      <button class="glow-button" id="generateBtn">GENERATE FACT</button>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+<footer class="cosmic-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <span class="glow">COSMIC</span>FACT HUB
+      <div class="footer-subtitle">Exploring the universe's weirdest truths</div>
+    </div>
+    
+    <div class="footer-links">
+      <h3>Galactic Navigation</h3>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="submit.html">Submit Fact</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-social">
+      <h3>Transmit With Us</h3>
+      <div class="social-icons">
+        <a href="#" class="social-icon" title="Twitter"><span>🛰️</span></a>
+        <a href="#" class="social-icon" title="Instagram"><span>🌌</span></a>
+        <a href="#" class="social-icon" title="Discord"><span>👽</span></a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-copyright">
+    <p>© 2025 Cosmic Fact Hub | Made with <span class="pulse">♥</span> in the Milky Way</p>
+  </div>
+</footer>
+
+  <script>
+const facts = [
+    "A neutron star's gravity is so strong, it bends light into a circle around it.",
+    "If two pieces of the same metal touch in space, they permanently bond (cold welding).",
+    "The largest known star, UY Scuti, could hold 5 billion Suns inside it.",
+    "There’s a giant cloud of alcohol in space (Sagittarius B2, 463 billion liters of ethanol).",
+    "The Moon has moonquakes caused by Earth's gravitational pull.",
+    "Saturn’s rings are 90% water ice and disappear every 14 years (from edge-on view).",
+    "A single day on Mercury lasts 1,408 hours (58 Earth days).",
+    "The Milky Way smells like rum (esters) and tastes like raspberries (scientists say).",
+    "Astronauts grow up to 2 inches taller in space due to spinal expansion.",
+    "The Sun’s core (15M°C) is hotter than its surface (5,500°C).",
+    "Venus spins backward—its sun rises in the west and sets in the east.",
+    "A teaspoon of a neutron star weighs 6 billion tons.",
+    "Space is completely silent—no sound can travel in a vacuum.",
+    "The footprints on the Moon will last 100 million years (no wind/water erosion).",
+    "Jupiter’s Great Red Spot has been raging for at least 400 years.",
+    "There’s a planet (HD 189733b) where it rains molten glass sideways at 5,400 mph.",
+    "The Hubble Telescope orbits Earth at 17,500 mph (completes a lap every 95 minutes).",
+    "The coldest place in the universe is the Boomerang Nebula (-272°C, 1°C above absolute zero).",
+    "A day on Pluto lasts 6.4 Earth days.",
+    "The Sun makes up 99.86% of the Solar System’s mass.",
+    "Light takes 8 minutes to reach Earth but 100,000 years to travel from the Sun’s core to its surface.",
+    "Mars has blue sunsets (opposite of Earth’s red/orange).",
+    "The ISS travels fast enough to see 16 sunrises/sunsets per day.",
+    "There are more stars in the universe than grains of sand on all Earth’s beaches.",
+    "A year on Venus is shorter than its day (225 vs. 243 Earth days).",
+    "The Moon is moving away from Earth at 3.8 cm per year.",
+    "Saturn’s moon Titan has liquid methane lakes and a nitrogen atmosphere thicker than Earth’s.",
+    "The Sun’s magnetic field is 10,000 times stronger than Earth’s.",
+    "A gamma-ray burst in 2008 was visible to the naked eye from 7.5 billion light-years away.",
+    "The Andromeda Galaxy is on a collision course with the Milky Way (in 4.5 billion years).",
+    "Black holes can sing—B-flat 57 octaves below middle C (NASA recorded one in 2003).",
+    "The hottest planet isn’t Mercury—it’s Venus (avg 464°C due to greenhouse effect).",
+    "Astronauts can’t cry in space—tears form bubbles that stick to their eyes.",
+    "The Moon has a tail (a stream of sodium atoms blown off by meteor impacts).",
+    "Pluto’s atmosphere freezes and falls to the ground when it orbits farther from the Sun.",
+    "The Milky Way rotates at 168 miles per second—but still takes 230 million years for one revolution.",
+    "There’s a hexagonal storm on Saturn’s north pole (20,000 miles wide).",
+    "The Sun’s energy output in 1 second could power Earth for 500,000 years.",
+    "Uranus rotates on its side (98° tilt)—its poles experience 42 years of sunlight/darkness.",
+    "A supernova’s magnetic field is a quadrillion times stronger than Earth’s.",
+    "The ‘Pillars of Creation’ in the Eagle Nebula were destroyed by a supernova 6,000 years ago—we’ll see it in 1,000 years.",
+    "The Moon’s gravity is 1/6th of Earth’s—you could jump 6x higher there.",
+    "Mars’ Olympus Mons is the tallest volcano in the Solar System (16 miles high, 3x Everest).",
+    "The ‘Wow! signal’ (1977) was a 72-second radio burst from space—still unexplained.",
+    "Quantum foam’ at Planck scales makes spacetime chaotic like ocean waves.",
+    "The universe’s expansion is accelerating due to dark energy (discovered in 1998).",
+    "Neptune’s winds are the fastest in the Solar System (1,300 mph).",
+    "Earth receives 100 tons of cosmic dust daily (mostly from comets).",
+    "The Oort Cloud (icy debris around the Solar System) extends 1.5 light-years out.",
+    "A ‘cosmic web’ of dark matter connects all galaxies in the universe."
+  ];
+  // DOM Elements
+  const factDisplay = document.getElementById('factDisplay');
+  const generateBtn = document.getElementById('generateBtn');
+  const factCounter = document.createElement('div'); // For showing progress
+  
+  // Variables
+  let usedFacts = [];
+  let currentFactIndex = 0;
+  
+  // Add fact counter to UI
+  factCounter.className = 'fact-counter';
+  factDisplay.parentNode.insertBefore(factCounter, factDisplay.nextSibling);
+  
+  // Initialize
+  updateCounter();
+  
+  // Improved fact generator with no-repeat
+  function getUniqueFact() {
+    if (usedFacts.length === facts.length) {
+      usedFacts = []; // Reset if all facts shown
+      currentFactIndex = 0;
+    }
+  
+    let availableFacts = facts.filter((fact, index) => !usedFacts.includes(index));
+    const randomIndex = availableFacts[Math.floor(Math.random() * availableFacts.length)];
+    const factIndex = facts.indexOf(randomIndex);
+    
+    usedFacts.push(factIndex);
+    currentFactIndex++;
+    return randomIndex;
+  }
+  
+  // Typewriter effect
+  function typeWriter(text, element, speed = 20) {
+    let i = 0;
+    element.innerHTML = ''; // Clear previous content
+    
+    function typing() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else {
+        // Add blinking cursor after typing completes
+        element.innerHTML += '<span class="cursor">|</span>';
+      }
+    }
+    
+    typing();
+  }
+  
+  // Update counter display
+  function updateCounter() {
+    factCounter.textContent = `Fact ${currentFactIndex}/${facts.length}`;
+    factCounter.style.color = '#00F5FF';
+    factCounter.style.fontFamily = "'Orbitron', sans-serif";
+    factCounter.style.margin = '10px 0';
+  }
+  
+  // Button click handler
+  generateBtn.addEventListener('click', () => {
+    // Disable button during animation
+    generateBtn.disabled = true;
+    
+    // Fade out current fact
+    factDisplay.style.opacity = '0';
+    
+    setTimeout(() => {
+      const fact = getUniqueFact();
+      
+      // Clear display and start typing animation
+      factDisplay.innerHTML = '';
+      factDisplay.style.opacity = '1';
+      
+      typeWriter(fact, factDisplay);
+      updateCounter();
+      
+      // Re-enable button after delay
+      setTimeout(() => {
+        generateBtn.disabled = false;
+      }, 2000);
+    }, 500);
+  });
+  </script>
+</body>
+</html>

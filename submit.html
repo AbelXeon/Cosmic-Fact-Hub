@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Fact | Cosmic Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0A1128;
+      color: #E2FDFF;
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR (Consistent with other pages) ===== */
+    .navbar {
+      background-color: rgba(10, 17, 40, 0.9);
+      border-bottom: 1px solid #00F5FF;
+      padding: 1.5rem 2rem;
+      position: relative;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #E2FDFF;
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: all 0.4s ease-out;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 15px #00F5FF;
+    }
+
+    .glow {
+      color: #00F5FF;
+      text-shadow: 0 0 10px #00F5FF;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #E2FDFF;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 500;
+      letter-spacing: 1px;
+      padding: 0.5rem 0;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #00F5FF;
+      text-shadow: 0 0 8px #00F5FF;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #FF2A6D;
+      bottom: 0;
+      left: 0;
+      transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+      box-shadow: 0 0 10px #FF2A6D;
+    }
+
+    .active {
+      color: #00F5FF;
+      text-shadow: 0 0 8px #00F5FF;
+    }
+
+    /* ===== SUBMIT FORM ===== */
+    .submit-container {
+      max-width: 700px;
+      margin: 3rem auto;
+      padding: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.5s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .submit-container h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00F5FF;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .submit-form {
+      background: rgba(10, 17, 40, 0.8);
+      border: 2px solid #00F5FF;
+      border-radius: 15px;
+      padding: 2.5rem;
+      box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+      transition: all 0.6s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-form::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        transparent,
+        transparent,
+        transparent,
+        rgba(0, 245, 255, 0.1),
+        transparent
+      );
+      transform: rotate(30deg);
+      animation: shine 6s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-family: 'Orbitron', sans-serif;
+      color: #00F5FF;
+      letter-spacing: 1px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(0, 10, 20, 0.7);
+      border: 1px solid #00F5FF;
+      border-radius: 8px;
+      color: #E2FDFF;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #FF2A6D;
+      box-shadow: 0 0 15px rgba(255, 42, 109, 0.5);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: linear-gradient(45deg, #6C63FF, #9D4DFF);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      display: block;
+      margin: 2rem auto 0;
+      transition: all 0.4s;
+      box-shadow: 0 5px 20px rgba(108, 99, 255, 0.5);
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(108, 99, 255, 0.7);
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent
+      );
+      transform: rotate(30deg);
+      transition: all 0.7s;
+    }
+
+    .submit-btn:hover::after {
+      left: 100%;
+    }
+
+    /* Submission Animation */
+    .beam-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 245, 255, 0.8) 0%,
+        transparent 70%
+      );
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      animation: beam 2s;
+    }
+
+    @keyframes beam {
+      0% { opacity: 0; transform: scale(0.5); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
+
+    /* Particles Background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: #00F5FF;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+/* ===== FOOTER STYLES ===== */
+.cosmic-footer {
+    background: rgba(10, 17, 40, 0.95);
+    border-top: 1px solid #00F5FF;
+    padding: 3rem 2rem 1.5rem;
+    color: #E2FDFF;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-subtitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: #00F5FF;
+    margin-top: 0.5rem;
+  }
+
+  .footer-links h3, 
+  .footer-social h3 {
+    color: #00F5FF;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .footer-links ul {
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: #E2FDFF;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: block;
+    padding: 0.3rem 0;
+  }
+
+  .footer-links a:hover {
+    color: #00F5FF;
+    transform: translateX(5px);
+    text-shadow: 0 0 8px rgba(0, 245, 255, 0.7);
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .social-icon {
+    color: #E2FDFF;
+    font-size: 1.5rem;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .social-icon:hover {
+    transform: translateY(-5px) scale(1.2);
+    color: #FF2A6D;
+  }
+
+  .footer-copyright {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #00F5FF;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  .pulse {
+    animation: pulse 1.5s infinite;
+    display: inline-block;
+    color: #FF2A6D;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  </style>
+</head>
+<body>
+  <!-- Animated Particles Background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="logo">
+        <span class="glow">COSMIC</span>FACT HUB 🚀
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">HOME</a></li>
+        <li><a href="quiz.html" class="nav-link">QUIZ</a></li>
+        <li><a href="submit.html" class="nav-link active">SUBMIT</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- SUBMIT FORM SECTION -->
+  <main class="submit-container">
+    <h1>SUBMIT A COSMIC FACT</h1>
+    
+    <form class="submit-form" id="factForm">
+      <div class="form-group">
+        <label for="name">YOUR NAME (OPTIONAL)</label>
+        <input type="text" id="name" class="form-control" placeholder="Commander...">
+      </div>
+      
+      <div class="form-group">
+        <label for="fact">YOUR FACT*</label>
+        <textarea id="fact" class="form-control" placeholder="Did you know...?" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="source">SOURCE (OPTIONAL)</label>
+        <input type="text" id="source" class="form-control" placeholder="NASA, Wikipedia...">
+      </div>
+      
+      <button type="submit" class="submit-btn">
+        TRANSMIT TO SPACE 🛰️
+      </button>
+    </form>
+  </main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="cosmic-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <span class="glow">COSMIC</span>FACT HUB
+      <div class="footer-subtitle">Exploring the universe's weirdest truths</div>
+    </div>
+    
+    <div class="footer-links">
+      <h3>Galactic Navigation</h3>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="submit.html">Submit Fact</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-social">
+      <h3>Transmit With Us</h3>
+      <div class="social-icons">
+        <a href="#" class="social-icon" title="Twitter"><span>🛰️</span></a>
+        <a href="#" class="social-icon" title="Instagram"><span>🌌</span></a>
+        <a href="#" class="social-icon" title="Discord"><span>👽</span></a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-copyright">
+    <p>© 2025 Cosmic Fact Hub | Made with <span class="pulse">♥</span> in the Milky Way</p>
+  </div>
+</footer>
+
+  <script>
+    // ===== JAVASCRIPT =====
+    // Create animated particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      particlesContainer.innerHTML = '';
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 3 + 1;
+        const posX = Math.random() * window.innerWidth;
+        const posY = Math.random() * window.innerHeight;
+        const duration = Math.random() * 20 + 10;
+        const delay = Math.random() * 5;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}px`;
+        particle.style.top = `${posY}px`;
+        particle.style.animation = `float ${duration}s linear ${delay}s infinite`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Add floating animation to particles
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0% { transform: translateY(0) translateX(0); opacity: 0; }
+        10% { opacity: 0.6; }
+        90% { opacity: 0.6; }
+        100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Form submission handler
+    document.getElementById('factForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const factText = document.getElementById('fact').value;
+      if (!factText.trim()) {
+        // Add error animation if fact is empty
+        const factField = document.getElementById('fact');
+        factField.style.borderColor = '#FF2A6D';
+        factField.style.boxShadow = '0 0 15px rgba(255, 42, 109, 0.5)';
+        setTimeout(() => {
+          factField.style.borderColor = '#00F5FF';
+          factField.style.boxShadow = 'none';
+        }, 1000);
+        return;
+      }
+      
+      // Create beam animation
+      const beam = document.createElement('div');
+      beam.className = 'beam-effect';
+      document.body.appendChild(beam);
+      
+      // Remove beam after animation
+      setTimeout(() => {
+        beam.remove();
+      }, 2000);
+      
+      // Show success message
+      setTimeout(() => {
+        alert('Fact successfully transmitted to the cosmic database! 🚀');
+        this.reset();
+      }, 2000);
+    });
+
+    // Initialize
+    createParticles();
+  </script>
+</body>
+</html>
